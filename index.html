@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="client.css">
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous">
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
+    integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"
+    integrity="sha512-B4skI5FiLurS86aioJx9VfozI1wjqrn6aTdJH+YQUmCZum/ZibPBTX55k5d9XM6EsKePDInkLVrN7vPmJxc1qA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer">
+  </script>
+  <script src="client.js"></script>
+  <meta charset="utf-8">
+  <title>Nethack Input Tracker</title>
+</head>
+<body>
+  <div class="row">
+    <table class="movement">
+      <tr>
+        <td class="dir-nw">↖</td>
+        <td class="dir-n">↑</td>
+        <td class="dir-ne">↗</td>
+      </tr>
+      <tr>
+        <td class="dir-w">←</td>
+        <td class="dir-c">@</td>
+        <td class="dir-e">→</td>
+      </tr>
+      <tr>
+        <td class="dir-sw">↙</td>
+        <td class="dir-s">↓</td>
+        <td class="dir-se">↘</td>
+      </tr>
+    </table>
+    <div class="keystrokes-holder">
+      <div class="keystrokes">
+      </div>
+    </div>
+  </div>
+</body>
+</html>
