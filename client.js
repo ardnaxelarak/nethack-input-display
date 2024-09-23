@@ -1,46 +1,114 @@
 const ws = new ReconnectingWebSocket("ws://localhost:8999");
 
 function fadeout($el) {
-  $el.stop();
-  $el.css("opacity", "100%");
-  $el.animate({opacity: 0}, 3000, "easeOutQuad");
+  $el.fadeOut({duration: 4000, easing: "easeInQuad", complete: () => $el.remove()});
 }
 
+var $extendedEl = null;
+
 ws.addEventListener("message", (event) => {
-  data = JSON.parse(event.data);
-  switch(data.name) {
+  key = JSON.parse(event.data);
+  rep = key.rep;
+
+  switch(key.name) {
     case "NUMPAD 7":
-      fadeout($(".dir-nw"));
-      return;
+      rep = "🡤";
+      break;
     case "NUMPAD 8":
-      fadeout($(".dir-n"));
-      return;
+      rep = "🡡";
+      break;
     case "NUMPAD 9":
-      fadeout($(".dir-ne"));
-      return;
+      rep = "🡥";
+      break;
     case "NUMPAD 4":
-      fadeout($(".dir-w"));
-      return;
+      rep = "🡠";
+      break;
+    case "NUMPAD 5":
+      rep = "5";
+      break;
     case "NUMPAD 6":
-      fadeout($(".dir-e"));
-      return;
+      rep = "🡢";
+      break;
     case "NUMPAD 1":
-      fadeout($(".dir-sw"));
-      return;
+      rep = "🡧";
+      break;
     case "NUMPAD 2":
-      fadeout($(".dir-s"));
-      return;
+      rep = "🡣";
+      break;
     case "NUMPAD 3":
-      fadeout($(".dir-se"));
-      return;
+      rep = "🡦";
+      break;
   }
 
-  if (data.rep) {
-    const $newKey = $("<span />").text(data.rep);
-    $(".keystrokes").append($newKey);
-    if (data.rep[0] == "<" && data.rep != "<") {
-      $newKey.css("font-size", "30%");
+  if ($extendedEl) {
+    if (["RETURN", "ESCAPE"].includes(key.name)) {
+      fadeout($extendedEl);
+      $extendedEl = null;
+      addKey(key.ctrl, false, rep);
+      return;
     }
-    $newKey.fadeOut({duration: 4000, easing: "easeInQuad", complete: () => $newKey.remove()});
+
+    if (key.alt) {
+      if ($extendedEl.text().length == 1) {
+        fadeout($extendedEl);
+        $extendedEl = null;
+        addKey(false, false, "<ESC>");
+        addKey(key.ctrl, false, rep);
+        return;
+      }
+
+      $extendedEl.text("#" + rep);
+      return;
+    }
+
+    if (key.ctrl) {
+      return;
+    }
+
+    if (key.name == "BACKSPACE") {
+      if ($extendedEl.text().length > 1) {
+        $extendedEl.text($extendedEl.text().slice(0, -1));
+      }
+      return;
+    }
+
+    if (key.name == "SPACE") {
+      rep = " ";
+    }
+
+    $extendedEl.text($extendedEl.text() + rep);
+    return;
+  }
+
+  if (rep == "#" && !key.ctrl && !key.alt) {
+    $extendedEl = $("<span />").text("#");
+    $(".keystrokes").append($extendedEl);
+    return;
+  }
+
+  if (rep) {
+    addKey(key.ctrl, key.alt, rep);
   }
 });
+
+function addKey(ctrl, alt, rep) {
+  if (rep) {
+    const $newKey = $("<span />");
+    $(".keystrokes").append($newKey);
+    if (rep[0] == "<" && rep != "<") {
+      $newKey.css("font-size", "30%");
+      $newKey.text(rep);
+    } else {
+      var text = "";
+      if (alt) {
+        text += "M-";
+      }
+      if (ctrl) {
+        text += "^";
+      }
+      text += rep;
+      $newKey.text(text);
+    }
+    fadeout($newKey);
+  }
+}

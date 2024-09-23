@@ -63,16 +63,7 @@ function get_representation(key) {
     return null;
   }
 
-  var ret = "";
-  if (key.alt) {
-    ret += "M-";
-  }
-  if (key.ctrl) {
-    ret += "^";
-  }
-  ret += base;
-
-  return ret;
+  return base;
 }
 
 aw.ActiveWindow.initialize();
@@ -117,6 +108,10 @@ v.addListener((key, down) => {
   data.rep = get_representation(data);
 
   if (data.name == "TAB" && data.alt) {
+    return;
+  }
+
+  if (data.name == "RETURN" && data.alt) {
     return;
   }
 

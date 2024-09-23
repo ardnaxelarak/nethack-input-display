@@ -2,40 +2,6 @@
   display: flex;
 }
 
-.movement {
-  font-family: "Consolas";
-  line-height: 1;
-  font-size: 200%;
-}
-
-.movement td {
-  width: 0.7em;
-  height: 1em;
-  text-align: center;
-  opacity: 0%;
-}
-
-.dir-n {
-  translate: 0 -3px;
-}
-
-.dir-s {
-  translate: 0 3px;
-}
-
-.dir-w {
-  translate: -3px -2px;
-}
-
-.dir-e {
-  translate: 3px -2px;
-}
-
-.dir-c {
-  translate: 0 -2px;
-  opacity: 100% !important;
-}
-
 .keystrokes-holder {
   position: relative;
   width: 500px;
