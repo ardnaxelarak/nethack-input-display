@@ -7,7 +7,7 @@ const v = new gkl.GlobalKeyboardListener();
 const reps = {
   "ESCAPE": {lower: "<ESC>", upper: "<ESC>"},
   "RETURN": {lower: "¶", upper: "¶"},
-  "SPACE": {lower: "<Space>", upper: "<Space>"},
+  "SPACE": {lower: " ", upper: " "},
   "1": {lower: "1", upper: "!"},
   "2": {lower: "2", upper: "@"},
   "3": {lower: "3", upper: "#"},

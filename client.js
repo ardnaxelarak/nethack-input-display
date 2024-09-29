@@ -38,6 +38,9 @@ ws.addEventListener("message", (event) => {
     case "NUMPAD 3":
       rep = "🡦";
       break;
+    case "NUMPAD DOT":
+      rep = ".";
+      break;
   }
 
   if ($extendedEl) {
@@ -96,7 +99,7 @@ function addKey(ctrl, alt, rep) {
     const $newKey = $("<span />");
     $(".keystrokes").append($newKey);
     if (rep[0] == "<" && rep != "<") {
-      $newKey.css("font-size", "30%");
+      $newKey.css("font-size", "70%");
       $newKey.text(rep);
     } else {
       var text = "";
