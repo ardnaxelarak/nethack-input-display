@@ -4,6 +4,8 @@ const WebSocketServer = require("ws");
 
 const v = new gkl.GlobalKeyboardListener();
 
+const windowTitle = "NetHack";
+
 const reps = {
   "ESCAPE": {lower: "<ESC>", upper: "<ESC>"},
   "RETURN": {lower: "¶", upper: "¶"},
@@ -31,7 +33,7 @@ const reps = {
   "SECTION": {lower: "`", upper: "~"},
 }
 
-const ignore = ["LEFT SHIFT", "RIGHT SHIFT", "LEFT CTRL", "RIGHT CTRL", "LEFT ALT", "RIGHT ALT", "LEFT META", "RIGHT META", "MOUSE LEFT", "MOUSE RIGHT", "MOUSE MIDDLE"]
+const ignore = ["LEFT SHIFT", "RIGHT SHIFT", "LEFT CTRL", "RIGHT CTRL", "LEFT ALT", "RIGHT ALT", "LEFT META", "RIGHT META", "MOUSE LEFT", "MOUSE RIGHT", "MOUSE MIDDLE"];
 
 function is_alt(down) {
   return down["LEFT ALT"] || down["RIGHT ALT"] || false;
@@ -86,7 +88,7 @@ wss.on("connection", client => {
 });
 
 v.addListener((key, down) => {
-  if (aw.ActiveWindow.getActiveWindow().title != "NetHack") {
+  if (aw.ActiveWindow.getActiveWindow().title != windowTitle) {
     return;
   }
 
