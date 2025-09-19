@@ -1,7 +1,6 @@
 require("@dotenvx/dotenvx").config({path: [".env.public"]});
 
 const windowTitle = process.env.WINDOW_TITLE;
-const port = process.env.PORT;
 
 var aw = null;
 
@@ -128,24 +127,3 @@ v.addListener((key, down) => {
     client.send(JSON.stringify(data));
   }
 });
-
-if (port) {
-  const express = require("express");
-  const app = express()
-
-  app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
-  });
-
-  app.get("/client.js", function (req, res) {
-    res.sendFile(path.join(__dirname, "client.js"));
-  });
-
-  app.get("/client.css", function (req, res) {
-    res.sendFile(path.join(__dirname, "client.css"));
-  });
-
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-  });
-}
