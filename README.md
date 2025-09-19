@@ -2,9 +2,10 @@
 Simple node/client script for displaying input keystrokes (suitable for use on a twitch stream) while playing NetHack.
 
 ### Setup
-- In `server.js`, change `const windowTitle = "NetHack"` to be whatever the window title of your nethack window is; this will be used to avoid displaying input when any other window is active.
+- In `.env.public`, change `WINDOW_TITLE=NetHack` to be whatever the window title of your nethack window is; this will be used to avoid displaying input when any other window is active. To display all inputs, comment out this line.
 - In the root directory, run `npm install` to install dependencies.
 - Add `index.html` as a browser source in OBS (520x120 works well); to make the text white (such as for a dark background), set "Custom CSS" to `body { color: white; }`.
+  - Alternately, to run as a server (so you can access from other devices on the network), uncomment `PORT=<number>` in `.env.public` to server the file on that port. For example, if you set `PORT=9312`, you would add `localhost:9312` as your browser source.
 
 ### Usage
 - In the root directory, run `npm start`. This will start a webserver sending keystrokes to any connected clients.

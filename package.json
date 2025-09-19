@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.50.1",
     "@paymoapp/active-window": "^2.1.1",
+    "express": "^5.1.0",
     "node-global-key-listener": "^0.3.0",
     "ws": "^8.18.0"
   }

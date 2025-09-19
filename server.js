@@ -1,10 +1,21 @@
-const aw = require("@paymoapp/active-window");
+require("@dotenvx/dotenvx").config({path: [".env.public"]});
+
+const windowTitle = process.env.WINDOW_TITLE;
+const port = process.env.PORT;
+
+var aw = null;
+
+if (windowTitle) {
+  aw = require("@paymoapp/active-window");
+  aw.ActiveWindow.initialize();
+  aw.ActiveWindow.requestPermissions();
+}
+
 const gkl = require("node-global-key-listener");
+const path = require("path");
 const WebSocketServer = require("ws");
 
 const v = new gkl.GlobalKeyboardListener();
-
-const windowTitle = "NetHack";
 
 const reps = {
   "ESCAPE": {lower: "<ESC>", upper: "<ESC>"},
@@ -68,10 +79,6 @@ function get_representation(key) {
   return base;
 }
 
-aw.ActiveWindow.initialize();
-
-aw.ActiveWindow.requestPermissions();
-
 const wss = new WebSocketServer.Server({port: 8999});
 
 const clients = [];
@@ -88,7 +95,7 @@ wss.on("connection", client => {
 });
 
 v.addListener((key, down) => {
-  if (aw.ActiveWindow.getActiveWindow().title != windowTitle) {
+  if (windowTitle && aw.ActiveWindow.getActiveWindow().title != windowTitle) {
     return;
   }
 
@@ -121,3 +128,24 @@ v.addListener((key, down) => {
     client.send(JSON.stringify(data));
   }
 });
+
+if (port) {
+  const express = require("express");
+  const app = express()
+
+  app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "index.html"));
+  });
+
+  app.get("/client.js", function (req, res) {
+    res.sendFile(path.join(__dirname, "client.js"));
+  });
+
+  app.get("/client.css", function (req, res) {
+    res.sendFile(path.join(__dirname, "client.css"));
+  });
+
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+}
